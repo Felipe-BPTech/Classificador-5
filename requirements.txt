@@ -4,5 +4,4 @@ scikit-learn
 numpy
 matplotlib
 openpyxl
-joblib
-pickle
+base64
