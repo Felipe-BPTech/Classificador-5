@@ -4,4 +4,4 @@ scikit-learn
 numpy
 matplotlib
 openpyxl
-base64
+
