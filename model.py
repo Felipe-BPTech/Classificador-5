@@ -1,13 +1,9 @@
 import streamlit as st
 import pandas as pd
-from sklearn import preprocessing
-from sklearn.preprocessing import OrdinalEncoder
-import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix,ConfusionMatrixDisplay
 import pickle
-from sklearn import tree
+
 import base64
 
 # Função para importar dados do Excel
@@ -22,7 +18,7 @@ def w_avg(df, values, weights):
 
 def agregar(dataframe):
     #geada
-    df_geada = pd.read_excel('Bases\\GEADA_10_2023 (2).xlsx', 'Geada')
+    df_geada = pd.read_excel('Bases/GEADA_10_2023 (2).xlsx', 'Geada')
     df_geada2 = pd.melt(df_geada, id_vars=['CD_USO_SOL','Grand Total'])
     df_geada2.drop(['Grand Total'], axis=1, inplace=True)
     df_geada2 = df_geada2.groupby('CD_USO_SOL').apply(w_avg, 'variable', 'value')
@@ -30,14 +26,14 @@ def agregar(dataframe):
     df_geada2 = df_geada2.reset_index()
     df_geada2.rename(columns={0:'geada'}, inplace=True)
     #ITW
-    df_itw = pd.read_csv('Bases\\ITW_NOVO.csv')
+    df_itw = pd.read_csv('Bases/ITW_NOVO.csv')
     df_itw['CAMALHAO'].replace({"Classe 2":2, "Classe 1":1, "Classe 3":3}, inplace=True)
     df_itw['chave'] = df_itw['ID_PROJETO'] + df_itw['CD_TALHAO']
     df_itw = df_itw[['chave','CAMALHAO']]
     #Classe
-    df_solo = pd.read_excel("Bases\\Legenda Solos 2020.xlsx", "1")
+    df_solo = pd.read_excel("Bases/Legenda Solos 2020.xlsx", "1")
     #Cadastro
-    df_cadastro = pd.read_csv('Bases\\Cadastro.csv')
+    df_cadastro = pd.read_csv('Bases/Cadastro.csv')
     df_cadastro = df_cadastro.loc[lambda df_cadastro: (df_cadastro['TIP_REG'] == "A") & (df_cadastro['EST_REG'] == "A")]
     df_cadastro['chave'] = df_cadastro['ID_PROJETO'].astype(str) + df_cadastro['CD_TALHAO']
     df_cadastro = df_cadastro.drop(['CD_USUARIO','ID_REGIAO','REGIAO_ADM',
